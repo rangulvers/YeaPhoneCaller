@@ -1,5 +1,8 @@
+
+ ![YeaPhoneCaller](https://raw.githubusercontent.com/msohns/YeaPhoneCaller/master/icon.ico)
+
 # YeaPhoneCaller
- ![YeaPhoneCaller](https://raw.githubusercontent.com/msohns/YeaPhoneCaller/master/icon.ico) YeaPhone Caller Client 
+Controll your Yealink SIP IP Phones 
 
 ## What is it for
 YeaPhone Caller Client is a small electron app to interact with your YeaLink IP Phones that are connected to as SIP PBX. 
