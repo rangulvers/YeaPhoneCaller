@@ -6,4 +6,4 @@ YeaPhone Caller Client is a small electron app to interact with your YeaLink IP 
 
 ## Tested Phones
 YeaPhone Caller has been tested with these devices
-* 27G
+* T27G
