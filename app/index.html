@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="./styles.css"> -->
+  <script>
+    delete module.exports
+  </script>
+  <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+  <script src="./index.js" charset="utf-8"></script>
+</head>
+
+<body>
+  <div class="container">
+    <h2>YeaPhone Einstellungen</h2>
+
+    <div class="row">
+      <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+        <table class="table table-hover">
+          <tbody>
+            <tr>
+              <td>Benutzer</td>
+              <td>
+                <input type="text" name="" id="user" class="form-control" value="" required="required" pattern="" title=""
+                  placeholder="Benutzer">
+              </td>
+            </tr>
+            <tr>
+              <td>Passwort</td>
+              <td><input type="password" name="" id="password" class="form-control" value="" required="required" pattern=""
+                  title="" placeholder="Passwort"></td>
+            </tr>
+            <tr>
+              <td>Telefon IP</td>
+              <td><input type="text" name="" id="phoneIp" class="form-control" value="" required="required" pattern=""
+                  title="" placeholder="Telefon IP"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <p><span>Anrufen : </span><span class="label label-primary">CommandOrControl + Y</span></p>
+        <p><span>Annehmen : </span><span class="label label-primary">CommandOrControl + J</span></p>
+        <p><span>Stummschalten : </span><span class="label label-primary">CommandOrControl + M</span></p>
+        
+      </div>
+    </div>
+
+
+    <p>
+      <button type="button" id="saveSettings" class="btn btn-primary">Speichern</button>
+    </p>
+
+  </div>
+</body>
+
+</html>
