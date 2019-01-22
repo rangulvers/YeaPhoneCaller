@@ -6,7 +6,9 @@ YeaPhone Caller Client is a small electron app to interact with your YeaLink IP 
 
 ## Keyboard Shortcuts
 Answer a call **CTRLorCOMMAND + J**
+
 Dial a Number from Clipboar **CTRLorCOMMAND + Y**
+
 Mute the Phone **CTRLorCOMMAND + M**
 
 ## Tested Phones
