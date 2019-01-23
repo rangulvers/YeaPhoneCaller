@@ -139,7 +139,8 @@ function makeCall(numberToDial) {
 
 function answerCall() {
   console.log("Answer Call")
-  let call_url = 'https://764f0c17-0125-4c15-96f8-78ed78bc42b9.mock.pstmn.io/makeCall'
+  let call_url = 'http://' + user + ':' + pw + '@' + ip + '/cgi-bin/ConfigManApp.com?key=ENTER'
+
   request.get({
     url: call_url
   }, function (e, r) {
@@ -152,6 +153,12 @@ function answerCall() {
 }
 
 function muteCall() {
+  let call_url = 'http://' + user + ':' + pw + '@' + ip + '/cgi-bin/ConfigManApp.com?key=MUTE'
+  request.get({
+    url: call_url
+  }, function (e, r) {
+    console.log(e, r)
+  });
   tray.displayBalloon({
     content: 'Telefon gestummt',
     title: "YeaPhone"
