@@ -37,7 +37,8 @@ makeCall(arg)
 function openSettingsWindow() {
   win = new BrowserWindow({
     width: 500,
-    height: 300
+    height: 300,
+    frame:false
   })
 
   win.loadURL(__dirname + '/app/index.html')
