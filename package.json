@@ -16,6 +16,7 @@
   "author": "msohns",
   "license": "ISC",
   "dependencies": {
+    "animate.css": "^3.7.0",
     "electron-builder": "^20.38.5",
     "electron-packager": "^13.0.1",
     "request": "^2.88.0"

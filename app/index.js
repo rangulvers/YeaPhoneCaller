@@ -12,10 +12,13 @@ $(() => {
         }
     });
 
+    
+
+
     let phoneSettings = store.get('phoneSettings')
     $('#user').val(phoneSettings.user),
-    $('#password').val(phoneSettings.password),
-    $('#phoneIp').val(phoneSettings.ip)
+        $('#password').val(phoneSettings.password),
+        $('#phoneIp').val(phoneSettings.ip)
 
     $('#saveSettings').click(function (e) {
         console.log('Save Setting')

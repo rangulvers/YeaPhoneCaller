@@ -1,6 +1,7 @@
 $(() => {
     const remote = require('electron').remote;
     const {clipboard,ipcRenderer} = require('electron')
+    
     let numberToDial = clipboard.readText()
     $('#numberToDial').val(numberToDial)
 
@@ -15,6 +16,6 @@ $(() => {
     $('#closeScreen').click(function (e) {
         e.preventDefault();
         var window = remote.getCurrentWindow();
-        window.minimize();
+        window.minimize();   
     });
 })

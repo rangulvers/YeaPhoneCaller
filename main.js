@@ -106,7 +106,7 @@ app.on('activate', () => {
 function prepCall() {
   let callWin = new BrowserWindow({
     width: 500,
-    height: 120,
+    height: 100,
     frame:false
   })
   callWin.loadURL(__dirname + '/app/callScreen/index.html')
