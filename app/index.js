@@ -26,7 +26,9 @@ $(() => {
             'ip': $('#phoneIp').val()
         }
         store.set('phoneSettings', phoneSettings)
+        console.log("Saved Settings")
         var window = remote.getCurrentWindow();
+        console.log(window)
         window.minimize();
     });
 })
