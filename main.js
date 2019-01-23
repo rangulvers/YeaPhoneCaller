@@ -4,10 +4,12 @@ const {
   Tray,
   BrowserWindow,
   globalShortcut,
-  clipboard
+  clipboard,
+  ipcMain
 } = require('electron');
+
 const path = require('path');
-var request = require('request');
+const request = require('request');
 var Store = require('./comps/store.js')
 
 let tray = null
@@ -15,7 +17,6 @@ let win = null
 let user = null
 let pw = null
 let ip = null
-
 
 const store = new Store({
   configName: 'user-settings',
@@ -28,16 +29,19 @@ const store = new Store({
   }
 });
 
+ipcMain.on('makecall-action', (event, arg) => {
+makeCall(arg)
+});
+
 
 function openSettingsWindow() {
   win = new BrowserWindow({
     width: 500,
-    height: 300,
-    frame:false
+    height: 300
   })
 
   win.loadURL(__dirname + '/app/index.html')
-  win.on('minimize',function(event){
+  win.on('minimize', function (event) {
     event.preventDefault();
     win.hide();
   });
@@ -51,8 +55,8 @@ function startTrayApp() {
       click: answerCall
     },
     {
-    label:'Stummschalten',
-    click:muteCall
+      label: 'Stummschalten',
+      click: muteCall
     },
     // {
     //   label: 'Anrufen',
@@ -71,19 +75,19 @@ function startTrayApp() {
   tray.setContextMenu(contextMenu)
 
   globalShortcut.register('CommandOrControl+Y', () => {
-    makeCall(clipboard.readText())
+    // makeCall(clipboard.readText())
+    prepCall()
   })
   globalShortcut.register('CommandOrControl+M', () => {
     muteCall()
   })
   globalShortcut.register('CommandOrControl+J', () => {
     answerCall()
-})
+  })
   let settings = store.get('phoneSettings')
   user = settings.user
   pw = settings.password
   ip = settings.ip
-  console.log(settings)
 }
 
 app.on('ready', startTrayApp)
@@ -95,24 +99,42 @@ app.on('window-all-closed', () => {
 })
 
 app.on('activate', () => {
-  if (win === null) {
-  }
+  if (win === null) {}
 })
 
+function prepCall() {
+  let callWin = new BrowserWindow({
+    width: 500,
+    height: 200,
+    frame:false
+  })
+  callWin.loadURL(__dirname + '/app/callScreen/index.html')
+  callWin.on('minimize', function (event) {
+    event.preventDefault();
+    callWin.hide();
+  });
+}
 
 function makeCall(numberToDial) {
-  console.log("Making Call")
-  tray.displayBalloon({
-    content: "Rufnummer wird gewählt : "+numberToDial,
-    title: "YeaPhone"
-  });
+  if (!isNaN(numberToDial)) {
+    console.log("Making Call")
+    tray.displayBalloon({
+      content: "Rufnummer wird gewählt : " + numberToDial,
+      title: "YeaPhone"
+    });
+    let call_url = 'http://' + user + ':' + pw + '@' + ip + '/cgi-bin/ConfigManApp.com?'
+    request.get({
+      url: call_url + 'number=' + numberToDial + '&outgoing_uri=URI'
+    }, function (e, r) {
+      console.log(e, r)
+    });
+  } else {
+    tray.displayBalloon({
+      content: "Prüfen Sie die Nummer",
+      title: "YeaPhone"
+    });
+  }
 
-  let call_url = 'http://'+user+':'+pw+'@'+ip+'/cgi-bin/ConfigManApp.com?'
-  request.get({
-    url: call_url + 'number=' + numberToDial + '&outgoing_uri=URI'
-  }, function (e, r) {
-    console.log(e, r)
-  });
 }
 
 function answerCall() {
@@ -129,7 +151,7 @@ function answerCall() {
   });
 }
 
-function muteCall(){
+function muteCall() {
   tray.displayBalloon({
     content: 'Telefon gestummt',
     title: "YeaPhone"
