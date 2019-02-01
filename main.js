@@ -4,8 +4,7 @@ const {
   Tray,
   BrowserWindow,
   globalShortcut,
-  clipboard,
-  ipcMain
+  ipcMain,
 } = require('electron');
 
 const path = require('path');
@@ -30,15 +29,14 @@ const store = new Store({
 });
 
 ipcMain.on('makecall-action', (event, arg) => {
-makeCall(arg)
+  makeCall(arg)
 });
-
 
 function openSettingsWindow() {
   win = new BrowserWindow({
     width: 500,
     height: 300,
-    frame:false
+    frame: false
   })
 
   win.loadURL(__dirname + '/app/index.html')
@@ -59,13 +57,9 @@ function startTrayApp() {
       label: 'Stummschalten',
       click: muteCall
     },
-    // {
-    //   label: 'Anrufen',
-    //   click: makeCall
-    // },
     {
       label: 'Einstellungen',
-      click: openSettings
+      click: openSettingsWindow
     },
     {
       label: 'Beenden',
@@ -76,7 +70,6 @@ function startTrayApp() {
   tray.setContextMenu(contextMenu)
 
   globalShortcut.register('CommandOrControl+Y', () => {
-    // makeCall(clipboard.readText())
     prepCall()
   })
   globalShortcut.register('CommandOrControl+M', () => {
@@ -107,7 +100,7 @@ function prepCall() {
   let callWin = new BrowserWindow({
     width: 500,
     height: 100,
-    frame:false
+    frame: false
   })
   callWin.loadURL(__dirname + '/app/callScreen/index.html')
   callWin.on('minimize', function (event) {
@@ -118,11 +111,7 @@ function prepCall() {
 
 function makeCall(numberToDial) {
   if (!isNaN(numberToDial)) {
-    console.log("Making Call")
-    tray.displayBalloon({
-      content: "Rufnummer wird gewählt : " + numberToDial,
-      title: "YeaPhone"
-    });
+    showBallon('YeaPhone', "Rufnummer wird gewählt : " + numberToDial)
     let call_url = 'http://' + user + ':' + pw + '@' + ip + '/cgi-bin/ConfigManApp.com?'
     request.get({
       url: call_url + 'number=' + numberToDial + '&outgoing_uri=URI'
@@ -130,12 +119,8 @@ function makeCall(numberToDial) {
       console.log(e, r)
     });
   } else {
-    tray.displayBalloon({
-      content: "Prüfen Sie die Nummer",
-      title: "YeaPhone"
-    });
+    showBallon('YeaPhone', 'Prüfen Sie die Rufnummer')
   }
-
 }
 
 function answerCall() {
@@ -147,10 +132,7 @@ function answerCall() {
   }, function (e, r) {
     console.log(e, r)
   });
-  tray.displayBalloon({
-    content: 'Anruf wird angenommen',
-    title: "YeaPhone"
-  });
+  showBallon('YeaPhone', 'Anruf wird angenommen')
 }
 
 function muteCall() {
@@ -160,16 +142,16 @@ function muteCall() {
   }, function (e, r) {
     console.log(e, r)
   });
-  tray.displayBalloon({
-    content: 'Telefon gestummt',
-    title: "YeaPhone"
-  });
-}
-
-function openSettings() {
-  openSettingsWindow()
+  showBallon('YeaPhone', 'Telefon wird stumm geschaltet')
 }
 
 function killApp() {
   app.quit()
+}
+
+function showBallon(title, content) {
+  tray.displayBalloon({
+    title: title,
+    content: content
+  })
 }

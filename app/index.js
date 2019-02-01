@@ -10,18 +10,14 @@ $(() => {
                 'password': ''
             }
         }
-    });
-
+    });   
     
-
-
     let phoneSettings = store.get('phoneSettings')
     $('#user').val(phoneSettings.user),
         $('#password').val(phoneSettings.password),
         $('#phoneIp').val(phoneSettings.ip)
 
     $('#saveSettings').click(function (e) {
-        console.log('Save Setting')
         e.preventDefault();
         let phoneSettings = {
             'user': $('#user').val(),
@@ -29,9 +25,7 @@ $(() => {
             'ip': $('#phoneIp').val()
         }
         store.set('phoneSettings', phoneSettings)
-        console.log("Saved Settings")
         var window = remote.getCurrentWindow();
-        console.log(window)
         window.minimize();
     });
 })
